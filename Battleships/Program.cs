@@ -60,6 +60,8 @@ namespace Battleships
             }
             #endregion
 
+            Console.Clear();
+
             #region playerboard with ships
             Console.WriteLine("Your ships has been placed as follows: ");
             for (int i = 0; i < player.playerShipsBoard.GetLength(0); i++)
@@ -82,11 +84,11 @@ namespace Battleships
             #endregion
 
             #region npc place ships
-            foreach (Ship npcShip in gameController.npcShips)
-            {
-                int npcShipLength = npcShip.Length;
-                npc.NpcPlaceShips(npcShipLength);
-            }
+            //foreach (Ship npcShip in gameController.npcShips)
+            //{
+            //    int npcShipLength = npcShip.Length;
+            //    npc.NpcPlaceShips(npcShipLength);
+            //}
             #endregion
 
             bool shipsPlacedConfirmed = true;
@@ -101,6 +103,25 @@ namespace Battleships
                 int userTargetY = int.Parse(Console.ReadLine());
 
                 player.PlayerShoot(userTargetX, userTargetY);
+
+                Console.WriteLine("Your guesses has been placed as follows: ");
+                for (int i = 0; i < player.playerShipsBoard.GetLength(0); i++)
+                {
+                    for (int j = 0; j < player.playerShipsBoard.GetLength(1); j++)
+                    {
+                        if (player.playerShipsBoard[i, j] == false)
+                        {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("[X]");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("[0]");
+                        }
+                    }
+                    Console.WriteLine();
+                }
 
                 //Npc Turn
 

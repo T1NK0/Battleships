@@ -33,36 +33,26 @@ namespace Battleships
                 hv = "v";
             }
 
-            if (hv == "h")
+            if (tempX + thisShipsLength <= 9 && tempY + thisShipsLength <= 9)
             {
-                for (int i = 0; i < thisShipsLength; i++)
+                if (hv == "h")
                 {
-                    if (true)
+                    for (int i = 0; i < thisShipsLength; i++)
                     {
+                        if (true)
+                        {
 
+                        }
+                        npcShipBoard[tempX, tempY + i] = true; //Skal finde en måde at få Y værdien calculated med ind i. Acceptere kun 2 values pt.         
                     }
-                    npcShipBoard[tempX, tempY + i] = true; //Skal finde en måde at få Y værdien calculated med ind i. Acceptere kun 2 values pt.         
                 }
-            }
-            else if (hv == "v")
-            {
-                for (int j = 0; j < thisShipsLength; j++)
+                else if (hv == "v")
                 {
-                    npcShipBoard[tempX + j, tempY] = true;//Skal finde en måde at få X værdien calculated med ind i. Acceptere kun 2 values pt.
+                    for (int j = 0; j < thisShipsLength; j++)
+                    {
+                        npcShipBoard[tempX + j, tempY] = true;//Skal finde en måde at få X værdien calculated med ind i. Acceptere kun 2 values pt.
+                    }
                 }
-            }
-
-            switch (shipLength)
-            {
-                case 5:
-
-                    break;
-                case 4:
-                    break;
-                case 3:
-                    break;
-                case 2:
-                    break;
             }
         }
 

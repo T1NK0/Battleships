@@ -42,13 +42,14 @@ namespace Battleships
 
             playerTargetBoard[targetX, targetY] = true;
 
-            if (npc.npcShipBoard [targetX, targetY] == true)
+            if (npc.npcShipBoard[targetX, targetY] == true)
             {
                 return "SHIP HIT";
             }
             else
             {
                 return "SPLASH!";
+
             }
         }
 
