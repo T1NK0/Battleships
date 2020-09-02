@@ -6,12 +6,6 @@ namespace Battleships
 {
     class Player : GameController
     {
-        #region player methods
-        //Ship placed.
-        //Choose target.
-        #endregion
-
-        //Player ships
         public bool[,] playerShipsBoard = new bool[10, 10]; //Creates a 10x10 2d array with default false values.
 
         public void PlaceShips(int x, int y, string horizontalOrVertical, int shipToPlacelength)
@@ -26,7 +20,7 @@ namespace Battleships
             {
                 for (int i = 0; i < shipslength; i++)
                 {
-                    playerShipsBoard[tempX, tempY + i] = true; //Skal finde en måde at få Y værdien calculated med ind i. Acceptere kun 2 values pt.
+                    playerShipsBoard[tempX, tempY + i] = true; //Skal finde en måde at få Y værdien calculated med ind i. Acceptere kun 2 values pt.         
                 }
             }
             else if (tempHV == "v")
@@ -40,7 +34,23 @@ namespace Battleships
 
         //Player target area 10x10
         public bool[,] playerTargetBoard = new bool[10, 10]; //Creates a 10x10 2d array with default false values.
+        public string PlayerShoot(int xTargetPosition, int yTargetPosition)
+        {
+            NPC npc = new NPC();
+            int targetX = xTargetPosition;
+            int targetY = yTargetPosition;
 
+            playerTargetBoard[targetX, targetY] = true;
+
+            if (npc.npcShipBoard [targetX, targetY] == true)
+            {
+                return "SHIP HIT";
+            }
+            else
+            {
+                return "SPLASH!";
+            }
+        }
 
     }
 }
