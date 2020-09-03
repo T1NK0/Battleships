@@ -13,7 +13,7 @@ namespace Battleships
                 answer = Convert.ToString(info.KeyChar).ToLower(); //Converts to string, and secured for capital letters
                 if (correctkeys.IndexOf(answer) < 0) // If user input is not of the given characters, IndexOf returns -1, and the statement is false!
                 {
-                    Console.Write(" Wrong input!");
+                    Console.WriteLine(" Wrong input!");
                 }
             }
             while (correctkeys.IndexOf(answer) < 0); //Runs until correct input.
@@ -122,11 +122,7 @@ namespace Battleships
             #endregion
 
             #region npc place ships
-            //foreach (Ship npcShip in gameController.npcShips)
-            //{
-            //    int npcShipLength = npcShip.Length;
-            //    npc.NpcPlaceShips(npcShipLength);
-            //}
+
             #endregion
 
             bool shipsPlacedConfirmed = true;

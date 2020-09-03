@@ -112,6 +112,8 @@ namespace Battleships
             while (cellIsTaken) //Runs if the cellIsTaken statement is true
             {
                 program.ShipPlacementGui();
+
+                cellIsTaken = CheckCells(tempX, tempY, shipslength, tempHV, PlayerShipsBoard);
             }
 
             if (cellIsTaken == false)
@@ -137,7 +139,7 @@ namespace Battleships
         {
             if (direction.ToLower() == "v") //Checks Vertical
             {
-                if (y + shiplength - 1 > 9)
+                if (y + shiplength > 9)
                 {
                     Console.WriteLine("The ship is out of the grid! Try Again!");
                     return true;
@@ -154,7 +156,7 @@ namespace Battleships
             }
             else //Checks Horizontal
             {
-                if (x + shiplength - 1 > 9)
+                if (x + shiplength > 9)
                 {
                     Console.WriteLine("The ship is out of the grid! Try Again!");
                     return true;
