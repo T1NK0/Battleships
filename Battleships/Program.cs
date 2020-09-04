@@ -129,6 +129,7 @@ namespace Battleships
                 Console.WriteLine("\n");
 
                 bool isWrongInput = true;
+
                 while (isWrongInput)
                 {
                     isWrongInput = gameController.NpcPlaceShips(shipsLength); //Call our PlaceShip method and send the user inputted values as parameters.
