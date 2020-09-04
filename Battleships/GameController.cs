@@ -95,11 +95,8 @@ namespace Battleships
 
         #region Player functions
         #region Player place ship
-        public void PlaceShips(int x, int y, string horizontalOrVertical, int shipToPlacelength)
+        public bool PlayerPlaceShips(int x, int y, string horizontalOrVertical, int shipToPlacelength)
         {
-            Ship ship = new Ship();
-            Program program = new Program();
-
             bool cellIsTaken = true;
             int tempX = x;
             int tempY = y;
@@ -108,13 +105,6 @@ namespace Battleships
             int shipslength = shipToPlacelength; //Sets the int to the current ships length.
 
             cellIsTaken = CheckCells(tempX, tempY, shipslength, tempHV, PlayerShipsBoard); //If cell isn't taken (return value is false)
-
-            while (cellIsTaken) //Runs if the cellIsTaken statement is true
-            {
-                program.ShipPlacementGui();
-
-                cellIsTaken = CheckCells(tempX, tempY, shipslength, tempHV, PlayerShipsBoard);
-            }
 
             if (cellIsTaken == false)
             {
@@ -134,43 +124,42 @@ namespace Battleships
                     }
                 }
             }
+
+            return cellIsTaken;
+
         }
-        private bool CheckCells(int x, int y, int shiplength, string direction, bool[,] PlayerShipBoards)
+        private bool CheckCells(int x, int y, int shiplength, string direction, bool[,] ShipBoards)
         {
-            if (direction.ToLower() == "v") //Checks Vertical
+            bool cellState = false;
+            if (direction == "h")
             {
-                if (y + shiplength > 9)
+                if (y + shiplength - 1 > 9)
                 {
-                    Console.WriteLine("The ship is out of the grid! Try Again!");
-                    return true;
+                    cellState = true;
                 }
-                for (int i = y; i < shiplength + y; i++)
+                for (int i = y; i < shiplength - 1 + y; i++)
                 {
-                    if (PlayerShipBoards[x, i] != false)
+                    if (ShipBoards[y, i] == true)
                     {
-                        Console.WriteLine("The ship could not be place here, since theres a ship already, try again");
-                        return true;
+                        cellState = true;
                     }
                 }
-                return false;
             }
-            else //Checks Horizontal
+            else
             {
-                if (x + shiplength > 9)
+                if (x + shiplength - 1 > 9)
                 {
-                    Console.WriteLine("The ship is out of the grid! Try Again!");
-                    return true;
+                    cellState = true;
                 }
-                for (int i = x; i < shiplength + x; i++)
+                for (int i = x; i < shiplength - 1 + x; i++)
                 {
-                    if (PlayerShipBoards[i, y] != false)
+                    if (ShipBoards[x, i] == true)
                     {
-                        Console.WriteLine("The ship could not be place here, since theres a ship already, try again");
-                        return true;
+                        cellState = true;
                     }
                 }
-                return false;
             }
+            return cellState;
         }
 
         #endregion
@@ -198,14 +187,13 @@ namespace Battleships
 
         #region Npc functions
         #region Npc place ships
-        public void NpcPlaceShips(int shipLength)
+        public bool NpcPlaceShips(int shipLength)
         {
             Random rnd = new Random(); //Makes us able to randomice the npc with random numbers and do actions on the numbers given.
+            bool cellIsTaken = true;
             int thisShipsLength = shipLength;
-
             int tempX = rnd.Next(0, 10); //Gives us a random X value to use for placement
             int tempY = rnd.Next(0, 10); //Gives us a random Y value to use for placement
-
             int tempHV = rnd.Next(1, 11); //Gives a random value for the horizontal or vertical, gotta calculate more
             string hv = null;
             if (tempHV <= 5)
@@ -217,29 +205,30 @@ namespace Battleships
                 hv = "v";
             }
 
-            if (tempX + thisShipsLength <= 9 && tempY + thisShipsLength <= 9)
+            cellIsTaken = CheckCells(tempX, tempY, thisShipsLength, hv, NpcShipBoard); //If cell isn't taken (return value is false)
+
+            if (cellIsTaken == false)
             {
                 if (hv == "h")
                 {
                     for (int i = 0; i < thisShipsLength; i++)
                     {
-                        if (true)
-                        {
-
-                        }
-                        NpcShipBoard[tempX, tempY + i] = true; //Skal finde en måde at få Y værdien calculated med ind i. Acceptere kun 2 values pt.         
+                        playerShipsBoard[tempX, tempY + i] = true;
                     }
                 }
+
                 else if (hv == "v")
                 {
                     for (int j = 0; j < thisShipsLength; j++)
                     {
-                        NpcShipBoard[tempX + j, tempY] = true;//Skal finde en måde at få X værdien calculated med ind i. Acceptere kun 2 values pt.
+                        playerShipsBoard[tempX + j, tempY] = true;
                     }
                 }
             }
+            return cellIsTaken;
         }
-        #endregion
-        #endregion
     }
+    #endregion
+    #endregion
 }
+

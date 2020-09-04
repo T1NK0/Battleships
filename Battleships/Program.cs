@@ -21,16 +21,16 @@ namespace Battleships
             return answer; // Returns user choise
         }
 
-        public string ShipPlacementGui()
+        static string ShipPlacementGui()
         {
-            Console.Write("Write the 'X' cordinate: ");
+            Console.Write("Write the 'Y' cordinate: ");
             int shipPlacementX = Convert.ToInt32(MenuChoise("0123456789"));
-            Console.Write("\nWrite the 'Y' cordinate: ");
+            Console.Write("\nWrite the 'X' cordinate: ");
             int shipPlacementY = Convert.ToInt32(MenuChoise("0123456789"));
             Console.Write("\nWrite 'h' for horizontal, write 'v' for vertical: ");
             string directionChoice = MenuChoise("hv");
 
-            string AllUserInputs = shipPlacementX + shipPlacementY + directionChoice;
+            string AllUserInputs = shipPlacementX + "@" + shipPlacementY + "@" + directionChoice;
             return AllUserInputs;
         }
 
@@ -53,33 +53,32 @@ namespace Battleships
             gameController.NpcShipCreater();
             #endregion
 
-            #region PlaceShips
+            #region Player place ships
             foreach (Ship playerShip in gameController.playerShips)
             {
                 //User input
                 int shipsLength = playerShip.Length;
                 Console.WriteLine($"Place: {playerShip.Name}");
-                
-                Console.Write("Write the 'X' cordinate: ");
-                int shipPlacementX = Convert.ToInt32(MenuChoise("0123456789"));
-
-                Console.Write("\nWrite the 'Y' cordinate: ");
-                int shipPlacementY = Convert.ToInt32(MenuChoise("0123456789"));
-
-                Console.Write("\nWrite 'h' for horizontal, write 'v' for vertical: ");
-                string directionChoice = MenuChoise("hv");
 
                 Console.WriteLine("\n");
 
-                //Placeship method
-                gameController.PlaceShips(shipPlacementX, shipPlacementY, directionChoice, shipsLength); //Call our PlaceShip method and send the user inputted values as parameters.
+                bool isWrongInput = true;
+                while (isWrongInput)
+                {
+                    string userInput = ShipPlacementGui();
+
+                    string[] input = userInput.Split("@");
+
+                    isWrongInput = gameController.PlayerPlaceShips(Convert.ToInt32(input[0]), Convert.ToInt32(input[1]), input[2], shipsLength); //Call our PlaceShip method and send the user inputted values as parameters.
+
+                }
 
                 Console.WriteLine();
 
                 Console.WriteLine("Your ships placement:");
-                for (int i = 0; i < gameController.PlayerShipsBoard.GetLength(0); i++)
+                for (int i = 0; i < 10; i++)
                 {
-                    for (int j = 0; j < gameController.PlayerShipsBoard.GetLength(1); j++)
+                    for (int j = 0; j < 10; j++)
                     {
                         if (gameController.PlayerShipsBoard[i, j] == false)
                         {
@@ -122,6 +121,40 @@ namespace Battleships
             #endregion
 
             #region npc place ships
+            foreach (Ship npcShip in gameController.npcShips)
+            {
+                int shipsLength = npcShip.Length;
+                Console.WriteLine($"Place: {npcShip.Name}");
+
+                Console.WriteLine("\n");
+
+                bool isWrongInput = true;
+                while (isWrongInput)
+                {
+                    isWrongInput = gameController.NpcPlaceShips(shipsLength); //Call our PlaceShip method and send the user inputted values as parameters.
+                }
+
+                Console.WriteLine("NPC ships placement:");
+                for (int i = 0; i < 10; i++)
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        if (gameController.PlayerShipsBoard[i, j] == false)
+                        {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("[ ]");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write("[O]");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+
+            }
 
             #endregion
 
