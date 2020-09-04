@@ -140,7 +140,7 @@ namespace Battleships
                 {
                     for (int j = 0; j < 10; j++)
                     {
-                        if (gameController.PlayerShipsBoard[i, j] == false)
+                        if (gameController.NpcShipBoard[i, j] == false)
                         {
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.Write("[ ]");
@@ -155,51 +155,52 @@ namespace Battleships
                 }
                 Console.WriteLine();
 
-            }
 
-            #endregion
 
-            bool shipsPlacedConfirmed = true;
+                #endregion
 
-            do
-            {
-                //Player turn
-                Console.Write("Write the targeted 'X' cordinate: ");
-                int userTargetX = int.Parse(MenuChoise("0123456789"));
+                //bool shipsPlacedConfirmed = true;
 
-                Console.Write("Write the targeted 'Y' cordinate: ");
-                int userTargetY = int.Parse(MenuChoise("0123456789"));
+                //do
+                //{
+                //    //Player turn
+                //    Console.Write("Write the targeted 'X' cordinate: ");
+                //    int userTargetX = int.Parse(MenuChoise("0123456789"));
 
-                player.PlayerShoot(userTargetX, userTargetY);
+                //    Console.Write("Write the targeted 'Y' cordinate: ");
+                //    int userTargetY = int.Parse(MenuChoise("0123456789"));
 
-                Console.WriteLine("Your guesses has been placed as follows: ");
-                for (int i = 0; i < gameController.PlayerShipsBoard.GetLength(0); i++)
-                {
-                    for (int j = 0; j < gameController.PlayerShipsBoard.GetLength(1); j++)
-                    {
-                        if (gameController.PlayerShipsBoard[i, j] == false)
-                        {
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write("[X]");
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("[0]");
-                        }
-                    }
-                    Console.WriteLine();
-                }
+                //    player.PlayerShoot(userTargetX, userTargetY);
+
+                //    Console.WriteLine("Your guesses has been placed as follows: ");
+                //    for (int i = 0; i < gameController.PlayerShipsBoard.GetLength(0); i++)
+                //    {
+                //        for (int j = 0; j < gameController.PlayerShipsBoard.GetLength(1); j++)
+                //        {
+                //            if (gameController.PlayerShipsBoard[i, j] == false)
+                //            {
+                //                Console.ForegroundColor = ConsoleColor.White;
+                //                Console.Write("[X]");
+                //            }
+                //            else
+                //            {
+                //                Console.ForegroundColor = ConsoleColor.Red;
+                //                Console.Write("[0]");
+                //            }
+                //        }
+                //        Console.WriteLine();
+                //    }
 
                 //Npc Turn
 
 
-            } while (shipsPlacedConfirmed == true);
-            #region Player Targeting
+                //} while (shipsPlacedConfirmed == true);
+                #region Player Targeting
 
-            #endregion
+                #endregion
 
-            Console.ReadLine();
+                Console.ReadLine();
+            }
         }
     }
 }

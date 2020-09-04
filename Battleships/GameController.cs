@@ -112,7 +112,7 @@ namespace Battleships
                 {
                     for (int i = 0; i < shipslength; i++)
                     {
-                        playerShipsBoard[tempX, tempY + i] = true;
+                        PlayerShipsBoard[tempX, tempY + i] = true;
                     }
                 }
 
@@ -120,7 +120,7 @@ namespace Battleships
                 {
                     for (int j = 0; j < shipslength; j++)
                     {
-                        playerShipsBoard[tempX + j, tempY] = true;
+                        PlayerShipsBoard[tempX + j, tempY] = true;
                     }
                 }
             }
@@ -139,11 +139,12 @@ namespace Battleships
                 }
                 for (int i = y; i < shiplength + y; i++)
                 {
-                    if (ShipBoards[x, i] == true)
+                    if (ShipBoards[i, y] != false)
                     {
                         cellState = true;
                     }
                 }
+                return cellState;
             }
             else
             {
@@ -153,35 +154,35 @@ namespace Battleships
                 }
                 for (int i = x; i < shiplength + x; i++)
                 {
-                    if (ShipBoards[y, i] == true)
+                    if (ShipBoards[i, x] != false)
                     {
                         cellState = true;
                     }
                 }
+                return cellState;
             }
-            return cellState;
         }
 
         #endregion
         #region Player Shoot
-        public string PlayerShoot(int xTargetPosition, int yTargetPosition)
-        {
-            NPC npc = new NPC();
-            int targetX = xTargetPosition;
-            int targetY = yTargetPosition;
+        //public string PlayerShoot(int xTargetPosition, int yTargetPosition)
+        //{
+        //    NPC npc = new NPC();
+        //    int targetX = xTargetPosition;
+        //    int targetY = yTargetPosition;
 
-            PlayerTargetBoard[targetX, targetY] = true;
+        //    PlayerTargetBoard[targetX, targetY] = true;
 
-            if (npc.NpcShipBoard[targetX, targetY] == true)
-            {
-                return "SHIP HIT";
-            }
-            else
-            {
-                return "SPLASH!";
+        //    if (npc.NpcShipBoard[targetX, targetY] == true)
+        //    {
+        //        return "SHIP HIT";
+        //    }
+        //    else
+        //    {
+        //        return "SPLASH!";
 
-            }
-        }
+        //    }
+        //}
         #endregion
         #endregion
 
@@ -213,7 +214,7 @@ namespace Battleships
                 {
                     for (int i = 0; i < thisShipsLength; i++)
                     {
-                        playerShipsBoard[tempX, tempY + i] = true;
+                        NpcShipBoard[tempX, tempY + i] = true;
                     }
                 }
 
@@ -221,7 +222,7 @@ namespace Battleships
                 {
                     for (int j = 0; j < thisShipsLength; j++)
                     {
-                        playerShipsBoard[tempX + j, tempY] = true;
+                        NpcShipBoard[tempX + j, tempY] = true;
                     }
                 }
             }
