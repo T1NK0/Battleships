@@ -136,12 +136,14 @@ namespace Battleships
                 if (y + shiplength - 1 > 9)
                 {
                     cellState = true;
+                    return cellState;
                 }
                 for (int i = y; i < shiplength + y; i++)
                 {
-                    if (ShipBoards[i, y] != false)
+                    if (ShipBoards[y, i] == true)
                     {
                         cellState = true;
+                        return cellState;
                     }
                 }
                 return cellState;
@@ -151,12 +153,14 @@ namespace Battleships
                 if (x + shiplength - 1 > 9)
                 {
                     cellState = true;
+                    return cellState;
                 }
                 for (int i = x; i < shiplength + x; i++)
                 {
-                    if (ShipBoards[i, x] != false)
+                    if (ShipBoards[x, i] == true)
                     {
                         cellState = true;
+                        return cellState;
                     }
                 }
                 return cellState;
