@@ -41,7 +41,6 @@ namespace Battleships
         }
         #endregion
 
-        #region game function methods
         #region create ships
         public Carrier CreateCarrier()
         {
@@ -91,22 +90,21 @@ namespace Battleships
             npcShips.Add(CreateDestroyer());
         }
         #endregion
-        #endregion
 
         #region Player functions
         #region Player place ship
         public bool PlayerPlaceShips(int x, int y, string horizontalOrVertical, int shipToPlacelength)
         {
-            bool cellIsTaken = true;
+            bool cellIsTakenPlayer = true;
             int tempX = x;
             int tempY = y;
             string tempHV = horizontalOrVertical;
 
             int shipslength = shipToPlacelength; //Sets the int to the current ships length.
 
-            cellIsTaken = CheckCells(tempX, tempY, shipslength, tempHV, PlayerShipsBoard); //If cell isn't taken (return value is false)
+            cellIsTakenPlayer = CheckCells(tempX, tempY, shipslength, tempHV, PlayerShipsBoard); //If cell isn't taken (return value is false)
 
-            if (cellIsTaken == false)
+            if (cellIsTakenPlayer == false)
             {
                 if (tempHV == "h")
                 {
@@ -125,7 +123,7 @@ namespace Battleships
                 }
             }
 
-            return cellIsTaken;
+            return cellIsTakenPlayer;
 
         }
         private bool CheckCells(int x, int y, int shiplength, string direction, bool[,] ShipBoards)
@@ -168,25 +166,51 @@ namespace Battleships
         }
 
         #endregion
+
         #region Player Shoot
-        //public string PlayerShoot(int xTargetPosition, int yTargetPosition)
-        //{
-        //    NPC npc = new NPC();
-        //    int targetX = xTargetPosition;
-        //    int targetY = yTargetPosition;
+        public bool PlayerShoot(int xTargetPosition, int yTargetPosition)
+        {
+            bool playerTurn = true;
+            NPC npc = new NPC();
+            int targetX = xTargetPosition;
+            int targetY = yTargetPosition;
 
-        //    PlayerTargetBoard[targetX, targetY] = true;
+            CheckIfHit(targetX, targetY, PlayerShipsBoard, NpcShipBoard, PlayerTargetBoard, NpcTargetBoard, playerTurn);
 
-        //    if (npc.NpcShipBoard[targetX, targetY] == true)
-        //    {
-        //        return "SHIP HIT";
-        //    }
-        //    else
-        //    {
-        //        return "SPLASH!";
+            return PlayerTargetBoard[targetX, targetY] = true;
+        }
 
-        //    }
-        //}
+        private void CheckIfHit(int x, int y, bool[,] playerShipsBoard, bool[,] npcShipBoard, bool[,] playersTargetBoard, bool[,] npcsTargetBoard, bool turn)
+        {
+            if (turn == true) //NPC TURN
+            {
+                if (npcShipBoard[x, y] == true)
+                {
+                    npcShipBoard[x, y] = false;
+                    playersTargetBoard[x, y] = true;
+
+                }
+                else
+                {
+                    playerShipsBoard[x, y] = true;
+                }
+            }
+            else //PLAYER TURN
+            {
+                if (npcShipBoard[x, y] == true)
+                {
+                    npcShipBoard[x, y] = false;
+                    playerShipsBoard[x, y] = true;
+
+                }
+                else
+                {
+                    playerShipsBoard[x, y] = true;
+                }
+            }
+
+        }
+
         #endregion
         #endregion
 
@@ -195,7 +219,7 @@ namespace Battleships
         public bool NpcPlaceShips(int shipLength)
         {
             Random rnd = new Random(); //Makes us able to randomice the npc with random numbers and do actions on the numbers given.
-            bool cellIsTaken = true;
+            bool cellIsTakenNpc = true;
             int thisShipsLength = shipLength;
             int tempX = rnd.Next(0, 10); //Gives us a random X value to use for placement
             int tempY = rnd.Next(0, 10); //Gives us a random Y value to use for placement
@@ -210,9 +234,9 @@ namespace Battleships
                 hv = "v";
             }
 
-            cellIsTaken = CheckCells(tempX, tempY, thisShipsLength, hv, NpcShipBoard); //If cell isn't taken (return value is false)
+            cellIsTakenNpc = CheckCells(tempX, tempY, thisShipsLength, hv, NpcShipBoard); //If cell isn't taken (return value is false)
 
-            if (cellIsTaken == false)
+            if (cellIsTakenNpc == false)
             {
                 if (hv == "h")
                 {
@@ -230,7 +254,7 @@ namespace Battleships
                     }
                 }
             }
-            return cellIsTaken;
+            return cellIsTakenNpc;
         }
     }
     #endregion

@@ -62,14 +62,14 @@ namespace Battleships
 
                 Console.WriteLine("\n");
 
-                bool isWrongInput = true;
-                while (isWrongInput)
+                bool isWrongInputPlayer = true;
+                while (isWrongInputPlayer)
                 {
                     string userInput = ShipPlacementGui();
 
                     string[] input = userInput.Split("@");
 
-                    isWrongInput = gameController.PlayerPlaceShips(Convert.ToInt32(input[0]), Convert.ToInt32(input[1]), input[2], shipsLength); //Call our PlaceShip method and send the user inputted values as parameters.
+                    isWrongInputPlayer = gameController.PlayerPlaceShips(Convert.ToInt32(input[0]), Convert.ToInt32(input[1]), input[2], shipsLength); //Call our PlaceShip method and send the user inputted values as parameters.
 
                 }
 
@@ -128,11 +128,11 @@ namespace Battleships
 
                 Console.WriteLine("\n");
 
-                bool isWrongInput = true;
+                bool isWrongInputNpc = true;
 
-                while (isWrongInput)
+                while (isWrongInputNpc)
                 {
-                    isWrongInput = gameController.NpcPlaceShips(shipsLength); //Call our PlaceShip method and send the user inputted values as parameters.
+                    isWrongInputNpc = gameController.NpcPlaceShips(shipsLength); //Call our PlaceShip method and send the user inputted values as parameters.
                 }
 
                 Console.WriteLine("NPC ships placement:");
@@ -154,53 +154,47 @@ namespace Battleships
                     Console.WriteLine();
                 }
                 Console.WriteLine();
-
-
-
-                #endregion
-
-                //bool shipsPlacedConfirmed = true;
-
-                //do
-                //{
-                //    //Player turn
-                //    Console.Write("Write the targeted 'X' cordinate: ");
-                //    int userTargetX = int.Parse(MenuChoise("0123456789"));
-
-                //    Console.Write("Write the targeted 'Y' cordinate: ");
-                //    int userTargetY = int.Parse(MenuChoise("0123456789"));
-
-                //    player.PlayerShoot(userTargetX, userTargetY);
-
-                //    Console.WriteLine("Your guesses has been placed as follows: ");
-                //    for (int i = 0; i < gameController.PlayerShipsBoard.GetLength(0); i++)
-                //    {
-                //        for (int j = 0; j < gameController.PlayerShipsBoard.GetLength(1); j++)
-                //        {
-                //            if (gameController.PlayerShipsBoard[i, j] == false)
-                //            {
-                //                Console.ForegroundColor = ConsoleColor.White;
-                //                Console.Write("[X]");
-                //            }
-                //            else
-                //            {
-                //                Console.ForegroundColor = ConsoleColor.Red;
-                //                Console.Write("[0]");
-                //            }
-                //        }
-                //        Console.WriteLine();
-                //    }
-
-                //Npc Turn
-
-
-                //} while (shipsPlacedConfirmed == true);
-                #region Player Targeting
-
-                #endregion
-
-                Console.ReadLine();
             }
+            #endregion
+
+            bool shipsPlacedConfirmed = true;
+
+            while (shipsPlacedConfirmed)
+            {
+                
+                if (playerTurn)
+                {
+
+                }
+                Console.Write("Write the targeted 'Y' cordinate: ");
+                int userTargetX = int.Parse(MenuChoise("0123456789"));
+
+                Console.Write("Write the targeted 'X' cordinate: ");
+                int userTargetY = int.Parse(MenuChoise("0123456789"));
+
+                gameController.PlayerShoot(userTargetX, userTargetY);
+
+                Console.WriteLine("Your guesses has been placed as follows: ");
+                for (int i = 0; i < gameController.PlayerTargetBoard.GetLength(0); i++)
+                {
+                    for (int j = 0; j < gameController.PlayerTargetBoard.GetLength(1); j++)
+                    {
+                        if (gameController.PlayerTargetBoard[userTargetX, userTargetY] == false)
+                        {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("[ ]");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("[0]");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            Console.ReadLine();
         }
     }
 }
