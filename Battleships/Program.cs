@@ -13,7 +13,7 @@ namespace Battleships
                 answer = Convert.ToString(info.KeyChar).ToLower(); //Converts to string, and secured for capital letters
                 if (correctkeys.IndexOf(answer) < 0) // If user input is not of the given characters, IndexOf returns -1, and the statement is false!
                 {
-                    Console.WriteLine(" Wrong input!");
+                    Console.WriteLine("Wrong input!");
                 }
             }
             while (correctkeys.IndexOf(answer) < 0); //Runs until correct input.
@@ -24,13 +24,13 @@ namespace Battleships
         static string ShipPlacementGui()
         {
             Console.Write("Write the 'Y' cordinate: ");
-            int shipPlacementX = Convert.ToInt32(MenuChoise("0123456789"));
+            int shipPlacementX = Convert.ToInt32(MenuChoise("0123456789")); //Takes in the user inputted X cordinate, currently reads it as y axis.
             Console.Write("\nWrite the 'X' cordinate: ");
-            int shipPlacementY = Convert.ToInt32(MenuChoise("0123456789"));
+            int shipPlacementY = Convert.ToInt32(MenuChoise("0123456789")); //Takes in the user inputted Y cordinate, currently reads as x axis.
             Console.Write("\nWrite 'h' for horizontal, write 'v' for vertical: ");
-            string directionChoice = MenuChoise("hv");
+            string directionChoice = MenuChoise("hv"); //allows the users to only input "h" or "v" key presses
 
-            string AllUserInputs = shipPlacementX + "@" + shipPlacementY + "@" + directionChoice;
+            string AllUserInputs = shipPlacementX + "@" + shipPlacementY + "@" + directionChoice; //Saves the user inputs in a string
             return AllUserInputs;
         }
 
@@ -161,36 +161,39 @@ namespace Battleships
 
             while (shipsPlacedConfirmed)
             {
-                
+                bool playerTurn = true;
                 if (playerTurn)
                 {
+                    Console.Write("Write the targeted 'Y' cordinate: ");
+                    int userTargetX = int.Parse(MenuChoise("0123456789"));
 
-                }
-                Console.Write("Write the targeted 'Y' cordinate: ");
-                int userTargetX = int.Parse(MenuChoise("0123456789"));
+                    Console.Write("Write the targeted 'X' cordinate: ");
+                    int userTargetY = int.Parse(MenuChoise("0123456789"));
 
-                Console.Write("Write the targeted 'X' cordinate: ");
-                int userTargetY = int.Parse(MenuChoise("0123456789"));
+                    gameController.PlayerShoot(userTargetX, userTargetY);
 
-                gameController.PlayerShoot(userTargetX, userTargetY);
-
-                Console.WriteLine("Your guesses has been placed as follows: ");
-                for (int i = 0; i < gameController.PlayerTargetBoard.GetLength(0); i++)
-                {
-                    for (int j = 0; j < gameController.PlayerTargetBoard.GetLength(1); j++)
+                    Console.WriteLine("Your guesses has been placed as follows: ");
+                    for (int i = 0; i < gameController.PlayerTargetBoard.GetLength(0); i++)
                     {
-                        if (gameController.PlayerTargetBoard[userTargetX, userTargetY] == false)
+                        for (int j = 0; j < gameController.PlayerTargetBoard.GetLength(1); j++)
                         {
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write("[ ]");
+                            if (gameController.PlayerTargetBoard[userTargetX, userTargetY] == false)
+                            {
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.Write("[ ]");
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("[0]");
+                            }
                         }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("[0]");
-                        }
+                        Console.WriteLine();
                     }
-                    Console.WriteLine();
+                }
+                else if (playerTurn == false)
+                {
+
                 }
             }
 

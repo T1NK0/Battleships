@@ -74,7 +74,7 @@ namespace Battleships
 
         public void PlayerShipCreater()
         {
-            playerShips.Add(CreateCarrier());
+            playerShips.Add(CreateCarrier()); //Adds ship to player ship list.
             playerShips.Add(CreateBattleship());
             playerShips.Add(CreateCruiser());
             playerShips.Add(CreateSubmarine());
@@ -83,7 +83,7 @@ namespace Battleships
 
         public void NpcShipCreater()
         {
-            npcShips.Add(CreateCarrier());
+            npcShips.Add(CreateCarrier()); //Adds ship to npc ship list.
             npcShips.Add(CreateBattleship());
             npcShips.Add(CreateCruiser());
             npcShips.Add(CreateSubmarine());
@@ -128,12 +128,13 @@ namespace Battleships
         }
         private bool CheckCells(int x, int y, int shiplength, string direction, bool[,] ShipBoards)
         {
-            bool cellState = false;
+            bool cellState = false; //creates a bool called cellstate that automaticly is false.
             if (direction == "h")
             {
-                if (y + shiplength - 1 > 9)
+                //Checks on Y axis
+                if (y + shiplength - 1 > 9) //Checks if the ship is within the array, -1 due to starting at 0.
                 {
-                    cellState = true;
+                    cellState = true; //change cellstate to true, if cell contains ship.
                     return cellState;
                 }
                 for (int i = y; i < shiplength + y; i++)
@@ -148,6 +149,7 @@ namespace Battleships
             }
             else
             {
+                //Checks on X axis
                 if (x + shiplength - 1 > 9)
                 {
                     cellState = true;
@@ -168,21 +170,44 @@ namespace Battleships
         #endregion
 
         #region Player Shoot
-        public bool PlayerShoot(int xTargetPosition, int yTargetPosition)
+        public void PlayerShoot(int xTargetPosition, int yTargetPosition)
         {
-            bool playerTurn = true;
             NPC npc = new NPC();
             int targetX = xTargetPosition;
             int targetY = yTargetPosition;
 
-            CheckIfHit(targetX, targetY, PlayerShipsBoard, NpcShipBoard, PlayerTargetBoard, NpcTargetBoard, playerTurn);
+            CheckIfHit(targetX, targetY, PlayerShipsBoard, NpcShipBoard, PlayerTargetBoard, NpcTargetBoard);
 
-            return PlayerTargetBoard[targetX, targetY] = true;
         }
+        #endregion
 
-        private void CheckIfHit(int x, int y, bool[,] playerShipsBoard, bool[,] npcShipBoard, bool[,] playersTargetBoard, bool[,] npcsTargetBoard, bool turn)
+        #region Npc Shoot
+        public void NpcShoot()
         {
-            if (turn == true) //NPC TURN
+            Random random = new Random();
+            int npcTargetX = random.Next(0, 10);
+            int npcTargetY = random.Next(0, 10);
+
+            CheckIfHit(npcTargetX, npcTargetY, PlayerShipsBoard, NpcShipBoard, PlayerTargetBoard, NpcTargetBoard);
+        }
+        #endregion
+
+        private void CheckIfHit(int x, int y, bool[,] playerShipsBoard, bool[,] npcShipBoard, bool[,] playersTargetBoard, bool[,] npcsTargetBoard)
+        {
+            if () //NPC TURN
+            {
+                if (playerShipsBoard[x, y] == true)
+                {
+                    playerShipsBoard[x, y] = false;
+                    npcsTargetBoard[x, y] = true;
+
+                }
+                else
+                {
+                    npcsTargetBoard[x, y] = true;
+                }
+            }
+            else //PLAYER TURN
             {
                 if (npcShipBoard[x, y] == true)
                 {
@@ -192,26 +217,10 @@ namespace Battleships
                 }
                 else
                 {
-                    playerShipsBoard[x, y] = true;
+                    playersTargetBoard[x, y] = true;
                 }
             }
-            else //PLAYER TURN
-            {
-                if (npcShipBoard[x, y] == true)
-                {
-                    npcShipBoard[x, y] = false;
-                    playerShipsBoard[x, y] = true;
-
-                }
-                else
-                {
-                    playerShipsBoard[x, y] = true;
-                }
-            }
-
         }
-
-        #endregion
         #endregion
 
         #region Npc functions
